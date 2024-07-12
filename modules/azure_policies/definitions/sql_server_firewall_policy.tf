@@ -7,9 +7,9 @@ module "policy_definitions_sql_server_firewall" {
       policy_type  = "Custom"
       mode         = "All"
       description  = "Restrict IP address for Azure SQL Server"
-      metadata     = jsonencode({
-        createdBy  = "123566352-sdf78-sdfs-77965824a85a"
-        createdOn  = "2024-06-10T21:47:35.2722043Z"
+      metadata = jsonencode({
+        createdBy = "123566352-sdf78-sdfs-77965824a85a"
+        createdOn = "2024-06-10T21:47:35.2722043Z"
       })
       version = "1.0.0"
       parameters = jsonencode({

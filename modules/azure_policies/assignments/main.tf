@@ -20,7 +20,7 @@ resource "azurerm_policy_assignment" "assignment" {
   parameters           = jsonencode(each.value.parameters)
   location             = each.value.location
 
-  depends_on = [azurerm_policy_set_definition.initiative]  # Adjust this based on your actual dependency
+  depends_on = [azurerm_policy_set_definition.initiative] # Adjust this based on your actual dependency
 
   # Optionally, you may want to add timeouts for operations
   timeouts {

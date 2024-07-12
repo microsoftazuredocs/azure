@@ -1,11 +1,11 @@
 variable "policy_initiatives" {
   description = "Map of policy initiatives to create"
-  type        = map(object({
+  type = map(object({
     display_name = string
     policy_type  = string
     description  = string
     metadata     = map(string)
-    parameters   = map(object({
+    parameters = map(object({
       type     = string
       metadata = map(string)
     }))
@@ -30,8 +30,8 @@ variable "subscription_id" {
 
 variable "policy_definitions" {
   description = "Map of policy definitions to be created."
-  default = {}
-  type        = map(object({
+  default     = {}
+  type = map(object({
     display_name = string
     policy_type  = string
     description  = string

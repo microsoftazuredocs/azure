@@ -10,7 +10,7 @@ resource "azurerm_policy_set_definition" "initiative" {
   policy_type  = each.value.policy_type
   description  = each.value.description
   metadata     = jsonencode(each.value.metadata)
-  
+
   parameters = jsonencode(each.value.parameters)
 
   dynamic "policy_definition_reference" {

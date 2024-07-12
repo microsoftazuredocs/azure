@@ -7,10 +7,10 @@ module "restrict_sql_server_initiative" {
       policy_type  = "Custom"
       description  = "Initiative to restrict access to SQL Servers"
       metadata = {
-        createdBy  = "123566352-sdf78-sdfs-77965824a85a"
-        createdOn  = "2024-06-10T21:47:35.2722043Z"
+        createdBy = "123566352-sdf78-sdfs-77965824a85a"
+        createdOn = "2024-06-10T21:47:35.2722043Z"
       }
-      version = "1.0.0"
+      version    = "1.0.0"
       parameters = {}
       policy_definitions = [
         {
