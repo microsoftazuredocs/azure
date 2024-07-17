@@ -1,55 +1,57 @@
 module "azure_policies" {
-  source = "../path/to/azure_policies"
+  source = "git::https://github.com/your-org/Enterprise.Terraform.Modules.git//modules/azure_policies/definitions"
 
   policy_definitions = {
-    RestrictIPForAzureSQLServer = {
+    "RestrictIPForAzureSQLServer" = {
+      display_name = "Restrict IP address for Azure SQL Server"
       policy_type  = "Custom"
-      mode         = "Indexed"
-      display_name = "Restrict IP for Azure SQL Server"
-      description  = "Restrict IP for Azure SQL Server"
-
+      mode         = "All"
+      description  = "Restrict IP address for Azure SQL Server"
       metadata = <<METADATA
-{
-  "category": "General"
-}
-METADATA
-
-      policy_rule = <<POLICY_RULE
-{
-  "if": {
-    "not": {
-      "field": "location",
-      "in": "[parameters('allowedLocations')]"
-    }
-  },
-  "then": {
-    "effect": "audit"
-  }
-}
-POLICY_RULE
-
+        {
+          "createdBy": "123566352-sdf78-sdfs-77965824a85a",
+          "createdOn": "2024-06-10T21:47:35.2722043Z"
+        }
+      METADATA
+      version = "1.0.0"
       parameters = <<PARAMETERS
-{
-  "allowedLocations": {
-    "type": "Array",
-    "metadata": {
-      "description": "The list of allowed locations for resources.",
-      "displayName": "Allowed locations",
-      "strongType": "location"
+        {
+          "allowedIPAddresses": {
+            "type": "Array",
+            "metadata": {
+              "displayName": "Allowed IP Addresses",
+              "description": "The list of allowed IP addresses."
+            }
+          }
+        }
+      PARAMETERS
+      policy_rule = <<POLICY_RULE
+        {
+          "if": {
+            "allOf": [
+              {
+                "field": "type",
+                "equals": "Microsoft.Sql/servers/firewallRules"
+              },
+              {
+                "not": {
+                  "field": "Microsoft.Sql/servers/firewallRules/startIpAddress",
+                  "in": "[parameters('allowedIPAddresses')]"
+                }
+              },
+              {
+                "not": {
+                  "field": "Microsoft.Sql/servers/firewallRules/endIpAddress",
+                  "in": "[parameters('allowedIPAddresses')]"
+                }
+              }
+            ]
+          },
+          "then": {
+            "effect": "Deny"
+          }
+        }
+      POLICY_RULE
     }
-  },
-  "allowed_ip_addresses": {
-    "type": "Array",
-    "metadata": {
-      "description": "List of allowed IP addresses",
-      "displayName": "Allowed IP addresses"
-    },
-    "value": ${jsonencode(var.allowed_ip_addresses)}
   }
-}
-PARAMETERS
-    }
-  }
-
-  allowed_ip_addresses = ["192.168.1.1", "192.168.1.2", "192.168.1.3", "192.168.1.4"]
 }
