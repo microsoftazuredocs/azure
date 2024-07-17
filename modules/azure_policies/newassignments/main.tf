@@ -3,6 +3,7 @@ locals {
   is_subscription     = var.assignment_scope == "subscription"
   is_resource_group   = var.assignment_scope == "resource_group"
   is_resource         = var.assignment_scope == "resource"
+  policy_definition_id = azurerm_policy_definition.policy_definitions.id
 }
 
 resource "azurerm_management_group_policy_assignment" "main" {

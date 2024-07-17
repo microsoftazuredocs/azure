@@ -2,6 +2,7 @@ variable "policy_definitions" {
   description = "Map of Azure Policy definitions."
   type = map(object({
     display_name = string
+    policy_type  = string
     description  = string
     policy_rule  = string
     metadata     = map(string)

@@ -27,7 +27,7 @@ variable "location" {
 
 variable "parameters" {
   description = "Parameters for the policy assignment"
-  type        = map(any)
+  type        = string
   default     = {}
 }
 
@@ -40,4 +40,50 @@ variable "description" {
 variable "assignment_scope" {
   description = "The specific scope for the policy assignment (management_group, subscription, resource_group, resource)"
   type        = string
+}
+#================
+
+
+variable "management_group_policy_assignment" {
+  type = map(object({
+    name         = string
+    policy_definition_id = string
+    display_name = string
+    description  = string
+    scope        = string
+  }))
+  default = {}
+}
+
+variable "subscription_policy_assignment" {
+  type = map(object({
+    name         = string
+    policy_definition_id = string
+    display_name = string
+    description  = string
+    scope        = string
+  }))
+  default = {}
+}
+
+variable "resource_group_policy_assignment" {
+  type = map(object({
+    name         = string
+    policy_definition_id = string
+    display_name = string
+    description  = string
+    scope        = string
+  }))
+  default = {}
+}
+
+variable "resource_policy_assignment" {
+  type = map(object({
+    name         = string
+    policy_definition_id = string
+    display_name = string
+    description  = string
+    scope        = string
+  }))
+  default = {}
 }
