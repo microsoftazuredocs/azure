@@ -65,3 +65,53 @@ output "policy_assignment_id" {
 }
 
 # Similar approach for policy_assignment_name output...
+locals {
+  policy_assignments = [
+    azurerm_management_group_policy_assignment.main[0] if length(azurerm_management_group_policy_assignment.main) > 0,
+    azurerm_subscription_policy_assignment.main[0] if length(azurerm_subscription_policy_assignment.main) > 0,
+    azurerm_resource_group_policy_assignment.main[0] if length(azurerm_resource_group_policy_assignment.main) > 0,
+    azurerm_resource_policy_assignment.main[0] if length(azurerm_resource_policy_assignment.main) > 0
+  ]
+}
+
+output "policy_assignment_ids" {
+  description = "The IDs of all policy assignments"
+  value = [
+    for assignment in local.policy_assignments : 
+    try(assignment.id, "unknown-id")
+  ]
+}
+
+output "policy_assignment_names" {
+  description = "The names of all policy assignments"
+  value = [
+    for assignment in local.policy_assignments : 
+    try(assignment.name, "unknown-name")
+  ]
+}
+
+
+
+output "policy_assignment_ids" {
+  description = "The IDs of all policy assignments"
+  value = [
+    for assignment in [
+      azurerm_management_group_policy_assignment.main[0] if length(azurerm_management_group_policy_assignment.main) > 0,
+      azurerm_subscription_policy_assignment.main[0] if length(azurerm_subscription_policy_assignment.main) > 0,
+      azurerm_resource_group_policy_assignment.main[0] if length(azurerm_resource_group_policy_assignment.main) > 0,
+      azurerm_resource_policy_assignment.main[0] if length(azurerm_resource_policy_assignment.main) > 0
+    ] : assignment.id if assignment != null
+  ]
+}
+
+output "policy_assignment_names" {
+  description = "The names of all policy assignments"
+  value = [
+    for assignment in [
+      azurerm_management_group_policy_assignment.main[0] if length(azurerm_management_group_policy_assignment.main) > 0,
+      azurerm_subscription_policy_assignment.main[0] if length(azurerm_subscription_policy_assignment.main) > 0,
+      azurerm_resource_group_policy_assignment.main[0] if length(azurerm_resource_group_policy_assignment.main) > 0,
+      azurerm_resource_policy_assignment.main[0] if length(azurerm_resource_policy_assignment.main) > 0
+    ] : assignment.name if assignment != null
+  ]
+}
