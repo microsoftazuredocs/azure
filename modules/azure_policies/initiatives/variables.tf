@@ -16,6 +16,18 @@ variable "policy_initiatives" {
   }))
 }
 
+# variable "policy_initiatives" {
+#   description = "Map of policy initiatives to create"
+#   type = map(object({
+#     display_name = string
+#     policy_type  = string
+#     description  = string
+#     metadata     = any
+#     parameters = any
+#     policy_definitions = any
+#   }))
+# }
+
 variable "management_group_name" {
   description = "Name of the Azure management group where the initiatives will be applied."
   type        = string
