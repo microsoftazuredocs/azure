@@ -115,3 +115,41 @@ output "policy_assignment_names" {
     ] : assignment.name if assignment != null
   ]
 }
+
+
+
+
+
+
+
+
+locals {
+  # Define potential resources in a list
+  potential_assignments = [
+    azurerm_management_group_policy_assignment.main,
+    azurerm_subscription_policy_assignment.main,
+    azurerm_resource_group_policy_assignment.main,
+    azurerm_resource_policy_assignment.main
+  ]
+
+  # Flatten and filter out null values
+  policy_assignments = flatten([
+    for resource in local.potential_assignments : [
+      for item in resource : item if item != null
+    ]
+  ])
+}
+
+output "policy_assignment_ids" {
+  description = "The IDs of all policy assignments"
+  value = [
+    for assignment in local.policy_assignments : lookup(assignment, "id", "unknown-id")
+  ]
+}
+
+output "policy_assignment_names" {
+  description = "The names of all policy assignments"
+  value = [
+    for assignment in local.policy_assignments : lookup(assignment, "name", "unknown-name")
+  ]
+}
